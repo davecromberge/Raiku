@@ -22,20 +22,21 @@ object RaikuBuild extends Build {
 
                   "spray repo" at "http://repo.spray.io"))
 
+  lazy val sentinel = ProjectRef(uri("https://github.com/davecromberge/sentinel.git#master"), "sentinel")
+
   val appDependencies = Seq(
       "io.spray" %%  "spray-json" % "1.2.6",
       "net.sandrogrzicic" %% "scalabuff-runtime" % "1.3.8",
-      
-      "nl.gideondk" %% "sentinel" % "0.7.5.1",
       "org.scalatest" %% "scalatest" % "2.2.0" % "test"
   )
+
 
   lazy val root = Project(id = "raiku",
     base = file("."),
     settings = Project.defaultSettings ++ Seq(
       libraryDependencies ++= appDependencies
     )
-  ).settings(Format.settings : _*)
+  ).settings(Format.settings : _*).dependsOn(sentinel)
 }
 
 object Format {
